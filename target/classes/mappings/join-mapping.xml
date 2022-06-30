@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="join">
+
+
+	<resultMap type="emp" id="empMap">
+		<id property="eno" column="ENO" />
+		<result property="ename" column="ENAME" />
+		<result property="job" column="JOB" />
+		<result property="manager" column="MANAGER" />
+		<result property="hiredate" column="HIREDATE" />
+		<result property="salary" column="SALARY" />
+		<result property="commission" column="COMMISSION" />
+		<result property="dno" column="DNO" />
+	</resultMap>
+
+	<resultMap type="dept" id="deptMap">
+		<id property="dno" column="DNO" />
+		<result property="dname" column="DNAME"></result>
+		<result property="loc" column="LOC"></result>
+	</resultMap>
+
+	<resultMap type="emps" id="empMap2">
+		<id property="eno" column="EMPLOYEE_ID" />
+		<result property="ename" column="FIRST_NAME" />
+		<result property="lname" column="LAST_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="phone" column="PHONE"/>
+		<result property="job" column="JOB" />
+		<result property="manager" column="MANAGER" />
+		<result property="hiredate" column="HIREDATE" />
+		<result property="salary" column="SALARY" />
+		<result property="commission" column="COMMISSION" />
+		<result property="dno" column="DNO" />
+	</resultMap>
+	
+	<resultMap type="depts" id="deptMap2">
+		<id property="dno" column="DNO" />
+		<result property="dname" column="DNAME"></result>
+		<result property="manager" column="MANAGER"/>
+		<result property="loc" column="LOC"></result>
+	</resultMap>
+	
+	<resultMap type="job" id="jobMap">
+		<id property="eno" column="ENO" />
+		<result property="sdate" column="SDATE" />
+		<result property="edate" column="EDATE"/>
+		<result property="job" column="JOB"/>
+		<result property="dno" column="DNO"/>
+	</resultMap>
+	
+	<resultMap type="loc" id="locMap">
+		<id property="loc" column="LOC" />
+		<result property="address" column="ADDRESS" />
+		<result property="pcode" column="PCODE"/>
+		<result property="state" column="STATE"/>
+		<result property="country" column="COUNTRY"/>
+	</resultMap>
+
+	<!-- 두 ResultMap을 처리하는 ResultMap -->
+	<resultMap type="joinvo" id="joinMap">
+		<collection property="empJ" resultMap="empMap" />
+		<collection property="deptJ" resultMap="deptMap" />
+	</resultMap>
+	
+	<resultMap type="joinvo2" id="joinMap2">
+		<collection property="empA" resultMap="empMap2"></collection>
+		<collection property="deptA" resultMap="deptMap2"></collection>
+		<collection property="jobA" resultMap="jobMap"></collection>
+		<collection property="locA" resultMap="locMap"></collection>
+	</resultMap>
+
+
+	<insert id="insertJoin">
+	<![CDATA[
+
+	]]>
+	</insert>
+
+	<update id="updateJoin">
+	<![CDATA[
+
+	]]>
+
+	</update>
+
+	<delete id="deleteJoin">
+	<![CDATA[
+
+	]]>
+
+	</delete>
+
+	<select id="selectOneJoin" resultType="joinvo">
+	<![CDATA[
+
+	]]>
+	</select>
+
+	<select id="selectListJoin" resultMap="joinMap">
+	<![CDATA[
+		SELECT E.ENO, E.ENAME, E.JOB, E.MANAGER, E.HIREDATE, E.SALARY, E.COMMISSION, 
+		       D.DNO, D.DNAME, D.LOC
+		FROM EMPLOYEE E, DEPARTMENT D
+		WHERE E.DNO = D.DNO
+	]]>
+	</select>
+
+	<select id="selectListJoin2" resultType="end_vo">
+	<![CDATA[
+		SELECT E.ENO, E.ENAME, E.JOB, E.MANAGER, E.HIREDATE, E.SALARY, E.COMMISSION, 
+		       D.DNO, D.DNAME, D.LOC
+		FROM EMPLOYEE E, DEPARTMENT D
+		WHERE E.DNO = D.DNO
+	]]>
+	</select>
+
+	<select id="selectListJoin3" resultMap="joinMap2">
+	<![CDATA[
+		SELECT * FROM EMPLOYEES E, DEPARTMENTS D, LOCATIONS L, JOB_HISTORY J
+		WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID AND D.LOCATION_ID = L.LOCATION_ID
+        AND E.JOB_ID = J.JOB_ID
+	]]>
+	</select>
+
+	<select id="selectListJoin4" resultType="all_vo">
+	<![CDATA[
+		select * from employees e, departments d, locations l, job_history j
+		where e.department_id = d.department_id and d.location_id = l.location_id
+        and e.job_id = j.job_id;
+	]]>
+	</select>
+
+
+</mapper>
